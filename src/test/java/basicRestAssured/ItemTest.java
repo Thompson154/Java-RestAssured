@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class ItemTest {
 
     @Test
-    @DisplayName("Verify Create Read Update Delete Project - Todo.ly")
+    @DisplayName("Verify Create Read Update Delete Item - Todo.ly")
     public void verifyCRUDProject() {
         JSONObject body = new JSONObject();
         body.put("Content", "RESTJsonBodyThompsonItem");
