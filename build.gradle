@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //restassured
+    testImplementation group: 'io.rest-assured', name: 'rest-assured-all', version: '5.5.0'
+    implementation group: 'io.rest-assured', name: 'rest-assured-common', version: '5.5.0'
+    implementation group: 'io.rest-assured', name: 'json-schema-validator', version: '5.5.0'
+    testImplementation group: 'io.rest-assured', name: 'json-path', version: '5.5.0'
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.0'
+
+    //json
+    implementation 'org.json:json:20240303'
+}
+
+test {
+    useJUnitPlatform()
+}
