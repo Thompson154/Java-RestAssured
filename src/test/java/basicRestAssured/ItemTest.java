@@ -8,17 +8,13 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-
-public class ProjectTest {
+public class ItemTest {
 
     @Test
     @DisplayName("Verify Create Read Update Delete Project - Todo.ly")
     public void verifyCRUDProject() {
         JSONObject body = new JSONObject();
-        body.put("Content", "RESTJsonBody");
-        body.put("Icon", 7);
+        body.put("Content", "RESTJsonBodyThompsonItem");
 
         // create
         Response response = given()
@@ -28,11 +24,10 @@ public class ProjectTest {
                 .body(body.toString())
                 .log().all()
                 .when()
-                .post("https://todo.ly/api/projects.json");
+                .post("https://todo.ly/api/items.json");
         response.then()
                 .statusCode(200)
                 .body("Content", equalTo(body.get("Content")))
-                .body("Icon", equalTo(7))
                 .log().all();
 
         int id = response.then().extract().path("Id");
@@ -43,16 +38,14 @@ public class ProjectTest {
                 .basic("api2024@2024.com", "12345")
                 .log().all()
                 .when()
-                .get("https://todo.ly/api/projects/" + id + ".json");
+                .get("https://todo.ly/api/items/" + id + ".json");
 
         response.then()
                 .statusCode(200)
                 .body("Content", equalTo(body.get("Content")))
-                .body("Icon", equalTo(7))
                 .log().all();
         // update
-        body.put("Content", "RESTUPDATE");
-        body.put("Icon", 10);
+        body.put("Checked", true);
         response = given()
                 .auth()
                 .preemptive()
@@ -60,12 +53,11 @@ public class ProjectTest {
                 .body(body.toString())
                 .log().all()
                 .when()
-                .put("https://todo.ly/api/projects/" + id + ".json");
+                .put("https://todo.ly/api/items/" + id + ".json");
 
         response.then()
                 .statusCode(200)
-                .body("Content", equalTo("RESTUPDATE"))
-                .body("Icon", equalTo(10))
+                .body("Checked", equalTo(true))
                 .log().all();
         // delete
 
@@ -75,11 +67,10 @@ public class ProjectTest {
                 .basic("api2024@2024.com", "12345")
                 .log().all()
                 .when()
-                .delete("https://todo.ly/api/projects/" + id + ".json");
+                .delete("https://todo.ly/api/items/" + id + ".json");
         response.then()
                 .statusCode(200)
-                .body("Content", equalTo("RESTUPDATE"))
-                .body("Icon", equalTo(10))
+                .body("Content", equalTo("RESTJsonBodyThompsonItem"))
                 .body("Deleted", equalTo(true))
                 .log().all();
     }
